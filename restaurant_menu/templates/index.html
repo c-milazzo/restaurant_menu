@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+
+    <h1 style="text-align:center;">Havana Bites</h1>
+    <p style="text-align:center;">
+        A newly opened Cuban restaurant, is the realization of
+        Chef Sofia Rodriguez's dream to bring the authentic flavors of Havana
+        to the heart of the city. Inspired by her Cuban heritage and family recipes
+        Sofia crafted a menu that celebrates Cuba's rich culinary traditions,
+        offering dishes like Ropa Vieja, Arroz con Pollo, and more.
+        The staff, led by Chef Sofia, is dedicated to creating a cultural and
+        flavorful experience for diners. Located in Center City, Havana Bites
+        exudes the warmth of a Cuban paladar with its cozy ambiance, vintage decor,
+        and live music. The restaurant's primary goal is to share the essence
+        of Cuban cuisine, using the finest ingredients and offering a cultural exchange
+        where guests can savor not only the food but also the music, art, and
+        hospitality that define Cuban culture. Come join us at Havana Bites,
+        where every bite is a bite of Havana's soul.</p>
+    <h2 style="margin-bottom: -25px; text-decoration: underline; text-decoration-thickness: 0.1rem;">Menu:</h2>
+    <ul class="list-group list-group-flush">
+    {% for meal in meals %}
+        <h2 class="pt-5">{{meal.1}}</h2>
+                {% for row in item_list %}
+                    {% if row.meal_type == meal.0 %}
+                        {% if row.status == 0 %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-0">
+                                <a href="{% url 'menu_item' row.pk %}"><h3><del>{{ row.meal }}</del></h3></a>
+                                <span class="badge bg-primary rounded-pill">{{row.price}}</span>
+                            </li>
+                            <li class="list-group-item pt-0">
+                                <p>{{ row.description }}</p>
+                            </li>
+                        {% else %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-0">
+                                <a href="{% url 'menu_item' row.pk %}"><h3>{{ row.meal }}</h3></a>
+                                <span class="badge bg-primary rounded-pill">{{row.price}}</span>
+                            </li>
+                            <li class="list-group-item pt-0">
+                                <p>{{ row.description }}</p>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+    {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
